@@ -14,13 +14,11 @@ def loginwindow():
     while True:
         event, values = loginpage.read()
         if event == 'Login':
-            Username = values[0]
-            Password = values[1]
-            if functions.login == True:
-                loginwindow.close()
+            if functions.login(values[0], values[1]) == True:
+                loginpage.close()
                 logged_in_window()
             else:
-                print('Entered wrong password or username')
+                sg.Popup("Login failed, try again")
 
         if event == sg.WIN_CLOSED: # if user closes window or clicks cancel
             break
@@ -51,9 +49,14 @@ def registerwindow():
     # Event Loop to process "events" and get the "values" of the inputs
     while True:
         event, values = registerpage.read()
-        
         if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
             break
+        if event == 'Confirm Credentials and Register':
+            functions.register(values[0], values[3])
+            registerpage.close()
+            startwindow()
+
+
         if event == 'Back':
             registerpage.close()
             startwindow()

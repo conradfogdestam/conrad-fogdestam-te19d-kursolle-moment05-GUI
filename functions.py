@@ -1,3 +1,7 @@
+file_users = 'accountfile.txt'
+logged_in_user = []
+logged_in_password = []
+
 def check_balance(username):
     with open(username + 'profile.txt', 'r') as f:
         danyboi = f.readline().split(' ')
@@ -28,9 +32,7 @@ def deposit(username, password, plus):
             f.write(str(new))
 
 def login(username, password):
-    print(Fore.LIGHTMAGENTA_EX + 'To login please input your credentials')
-    username = input(F"Username: ")
-    password = input("Password: ")
+    print('To login please input your credentials')
     logged_in_user.append(username)  # appendar username till logged_in_user så det kan användar i funktionerna sedan
     logged_in_password.append(password)  # appendar passwored till logged_in_password så det kan användar i funktionerna sedan
     for line in open(file_users, "r").readlines(): # löser igenom alla rader i accountfile.txt och letar efter match
@@ -43,8 +45,6 @@ def login(username, password):
 
 def register(username, password):
     print('Input credentials to register account: ')
-    username = input("Username: ")
-    password = input("Password: ")
     with open(username + 'transactions.txt', 'a+') as f: # skriver ner en balance på 1000 till att börja i transacions filen
         f.write('Balance $1000\n')
     with open(username + 'profile.txt', 'w+') as f: # skriver användare info i profile filen
@@ -59,4 +59,4 @@ def register(username, password):
         f.write(password)
         f.write("\n")
         f.close()
-        print(f'Account set up, thank you for choosing CAYMAN ISLANDS NATIONAL BANK™')
+    print(username, password)
