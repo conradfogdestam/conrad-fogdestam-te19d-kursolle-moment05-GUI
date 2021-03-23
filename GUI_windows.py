@@ -93,9 +93,9 @@ def startwindow():
 
 def withdrawal_window():
     sg.theme('DarkPurple7')
-    layout = [[sg.Text('Please enter credentials')],
+    layout = [[sg.Text('Enter Amount To Withdraw')],
             [sg.Text('Amount to withdraw: ', size=(15, 1)), sg.InputText()],
-            [sg.Button('Back'), sg.Button('Withdraw Amount')],
+            [sg.Button('Back'), sg.Button('Withdraw')],
             [sg.Text('© 2021 CAYMAN ISLANDS NATIONAL BANK™ CAY IS, Inc. All rights reserved.', justification='center', size=(62, 1), font='Helvetica 10')]]
 
     withdrawal_page = sg.Window('CAYMAN ISLANDS NATIONAL BANK™', layout)
@@ -115,6 +115,31 @@ def withdrawal_window():
             logged_in_window()
 
     withdrawal_page.close()
+
+def deposit_window():
+    sg.theme('DarkPurple7')
+    layout = [[sg.Text('Enter Amount To Deposit')],
+            [sg.Text('Amount to Deposit: ', size=(15, 1)), sg.InputText()],
+            [sg.Button('Back'), sg.Button('Deposit')],
+            [sg.Text('© 2021 CAYMAN ISLANDS NATIONAL BANK™ CAY IS, Inc. All rights reserved.', justification='center', size=(62, 1), font='Helvetica 10')]]
+
+    deposit_page = sg.Window('CAYMAN ISLANDS NATIONAL BANK™', layout)
+    # Event Loop to process "events" and get the "values" of the inputs
+    while True:
+        event, values = deposit_page.read()
+        if event == sg.WIN_CLOSED: # if user closes window or clicks cancel
+            break
+
+        if event == 'Deposit':
+            functions.deposit(str(functions.logged_in_user()), str(functions.logged_in_password()), int(values[0]))
+            deposit_page.close()
+            logged_in_window()
+
+        if event == 'Back':
+            deposit_page.close()
+            logged_in_window()
+
+    deposit_page.close()
 
 def logged_in_window():
     sg.theme('DarkPurple7')
@@ -142,8 +167,16 @@ def logged_in_window():
         if event == 'Make Withdrawal':
             logged_in_page.close()
             withdrawal_window()
-
         
+        if event == 'Make Deposit':
+            logged_in_page.close()
+            deposit_window()
+
+        #if event == 'Check Transactions':
+
+        if event == 'Terminate Account':
+            functions.terminate_user(str(functions.logged_in_user()), str(functions.logged_in_password()))
+                
         if event == 'EXIT':
             logged_in_page.close()
 

@@ -1,3 +1,5 @@
+import os
+
 file_users = 'accountfile.txt'
 logged_in_user = []
 logged_in_password = []
@@ -7,6 +9,16 @@ def get_current_user():
 
 def get_current_password():
     return logged_in_password[-1]
+
+def terminate_user(user, password):
+    os.remove(str(user) + 'profile.txt')
+    os.remove(str(user) + 'transactions.txt')
+    with open(file_users, "r") as f: # löser inn alla rader ur accountfile.txt
+        lines = f.readlines()
+    with open(file_users, "w") as f:#skriver in alla rader förutom  'if line.strip("\n") != str(user) + ' ' + str(password):'
+        for line in lines:
+            if line.strip("\n") != str(user) + ' ' + str(password):
+                f.write(line)
 
 def check_balance(username):
     with open(username + 'profile.txt', 'r') as f:
