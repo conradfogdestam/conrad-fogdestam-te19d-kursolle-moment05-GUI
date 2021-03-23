@@ -5,7 +5,7 @@ def loginwindow():
     layout = [[sg.Text('Please enter credentials')],
             [sg.Text('Username', size=(15, 1)), sg.InputText()],
             [sg.Text('Password', size=(15, 1)), sg.InputText(password_char='*')],
-            [sg.Submit('Register Account')]]
+            [sg.Button('Back'), sg.Submit('Register Account')]]
 
     loginpage = sg.Window('CAYMAN ISLANDS NATIONAL BANK™', layout)
     # Event Loop to process "events" and get the "values" of the inputs
@@ -13,7 +13,11 @@ def loginwindow():
         event, values = loginpage.read()
         if event == sg.WIN_CLOSED: # if user closes window or clicks cancel
             break
+        if event == 'Back':
+            loginpage.close()
+            startwindow()
         if event == 'Register Account':
+            loginpage.close()
             registerwindow()
         print('You entered ', values[0])
 
@@ -28,8 +32,7 @@ def registerwindow():
             [sg.Text('First name', size=(15, 1)), sg.InputText()],
             [sg.Text('Last name', size=(15, 1)), sg.InputText()],
             [sg.Text('Password', size=(15, 1)), sg.InputText(password_char='*')],
-            [sg.Submit('back')],
-            [sg.Submit('OK')]]
+            [sg.Button('Back'), sg.Button('Confirm Credentials and Register')]]
 
     registerpage = sg.Window('CAYMAN ISLANDS NATIONAL BANK™', layout)
     # Event Loop to process "events" and get the "values" of the inputs
@@ -37,7 +40,7 @@ def registerwindow():
         event, values = registerpage.read()
         if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
             break
-        if event == 'back':
+        if event == 'Back':
             registerpage.close()
             startwindow()
         print('You entered ', values[0])
