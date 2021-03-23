@@ -1,4 +1,4 @@
-import GUI_functions
+import GUI_windows
 from functions import *
 
-loginwindow()
+GUI_windows.startwindow()

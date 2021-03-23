@@ -74,4 +74,24 @@ def startwindow():
 
     startpage.close()
 
-startwindow()
+
+def logged_in():
+    sg.theme('DarkPurple7')
+    layout = [[sg.Text('CAYMAN ISLANDS NATIONAL BANK™', text_color='Magenta', size=(31, 1), font='Helvetica 20')],
+            [sg.Button('Balance', size=(62, 2))],
+            [sg.Button('Withdrawal', size=(62, 2))],
+            [sg.Button('Deposit', size=(62, 2))],
+            [sg.Button('Transactions', size=(62, 2))],
+            [sg.Button('Terminate Account', size=(62, 2))],
+            [sg.Text('© 2021 CAYMAN ISLANDS NATIONAL BANK™ CAY IS, Inc. All rights reserved.', justification='center', size=(62, 1), font='Helvetica 10')]]
+
+
+    logged_in_page = sg.Window('CAYMAN ISLANDS NATIONAL BANK™', layout)
+    # Event Loop to process "events" and get the "values" of the inputs
+    while True:
+        event, values = logged_in_page.read()
+        if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
+            break    
+        print('You entered ', values[0])
+
+    logged_in_page.close()
