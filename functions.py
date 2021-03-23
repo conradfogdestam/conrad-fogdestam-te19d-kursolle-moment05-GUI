@@ -5,10 +5,12 @@ logged_in_user = []
 logged_in_password = []
 
 def get_current_user():
-    return logged_in_user[-1]
+    u = str(logged_in_user[-1])
+    return u
 
 def get_current_password():
-    return logged_in_password[-1]
+    p = str(logged_in_password[-1])
+    return p
 
 def terminate_user(user, password):
     os.remove(str(user) + 'profile.txt')

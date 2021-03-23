@@ -105,8 +105,8 @@ def withdrawal_window():
         if event == sg.WIN_CLOSED: # if user closes window or clicks cancel
             break
 
-        if event == 'Withdraw Amount':
-            functions.withdrawal(str(functions.logged_in_user()), str(functions.logged_in_password()), int(values[0]))
+        if event == 'Withdraw':
+            functions.withdrawal(functions.logged_in_user(), functions.logged_in_password(), int(values[0]))
             withdrawal_page.close()
             logged_in_window()
 
@@ -131,7 +131,7 @@ def deposit_window():
             break
 
         if event == 'Deposit':
-            functions.deposit(str(functions.logged_in_user()), str(functions.logged_in_password()), int(values[0]))
+            functions.deposit(functions.logged_in_user(), functions.logged_in_password(), int(values[0]))
             deposit_page.close()
             logged_in_window()
 
