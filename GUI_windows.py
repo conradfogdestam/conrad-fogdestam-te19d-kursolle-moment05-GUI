@@ -91,6 +91,30 @@ def startwindow():
 
     startpage.close()
 
+def withdrawal_window():
+    sg.theme('DarkPurple7')
+    layout = [[sg.Text('Please enter credentials')],
+            [sg.Text('Amount to withdraw: ', size=(15, 1)), sg.InputText()],
+            [sg.Button('Back'), sg.Button('Withdraw Amount')],
+            [sg.Text('© 2021 CAYMAN ISLANDS NATIONAL BANK™ CAY IS, Inc. All rights reserved.', justification='center', size=(62, 1), font='Helvetica 10')]]
+
+    withdrawal_page = sg.Window('CAYMAN ISLANDS NATIONAL BANK™', layout)
+    # Event Loop to process "events" and get the "values" of the inputs
+    while True:
+        event, values = withdrawal_page.read()
+        if event == sg.WIN_CLOSED: # if user closes window or clicks cancel
+            break
+
+        if event == 'Withdraw Amount':
+            functions.withdrawal(str(functions.logged_in_user()), str(functions.logged_in_password()), int(values[0]))
+            withdrawal_page.close()
+            logged_in_window()
+
+        if event == 'Back':
+            withdrawal_page.close()
+            logged_in_window()
+
+    withdrawal_page.close()
 
 def logged_in_window():
     sg.theme('DarkPurple7')
@@ -101,6 +125,7 @@ def logged_in_window():
             [sg.Button('Make Deposit', size=(62, 2))],
             [sg.Button('Check Transactions', size=(62, 2))],
             [sg.Button('Terminate Account', size=(62, 2))],
+            [sg.Button('EXIT', size=(62, 2))],
             [sg.Text('© 2021 CAYMAN ISLANDS NATIONAL BANK™ CAY IS, Inc. All rights reserved.', justification='center', size=(62, 1), font='Helvetica 10')]]
 
 
@@ -109,7 +134,17 @@ def logged_in_window():
     while True:
         event, values = logged_in_page.read()
         if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
-            break    
-        print('You entered ', values[0])
+            break  
+
+        if event == 'View Balance':
+            sg.popup(f"Balance: ${functions.check_balance(functions.get_current_user())}", font='Helvetica 20')
+
+        if event == 'Make Withdrawal':
+            logged_in_page.close()
+            withdrawal_window()
+
+        
+        if event == 'EXIT':
+            logged_in_page.close()
 
     logged_in_page.close()

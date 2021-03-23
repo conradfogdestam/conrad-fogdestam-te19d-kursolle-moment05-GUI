@@ -2,6 +2,12 @@ file_users = 'accountfile.txt'
 logged_in_user = []
 logged_in_password = []
 
+def get_current_user():
+    return logged_in_user[-1]
+
+def get_current_password():
+    return logged_in_password[-1]
+
 def check_balance(username):
     with open(username + 'profile.txt', 'r') as f:
         danyboi = f.readline().split(' ')
