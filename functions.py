@@ -26,3 +26,37 @@ def deposit(username, password, plus):
             f.write(password)
             f.write(' ')
             f.write(str(new))
+
+def login(username, password):
+    print(Fore.LIGHTMAGENTA_EX + 'To login please input your credentials')
+    username = input(F"Username: ")
+    password = input("Password: ")
+    logged_in_user.append(username)  # appendar username till logged_in_user så det kan användar i funktionerna sedan
+    logged_in_password.append(password)  # appendar passwored till logged_in_password så det kan användar i funktionerna sedan
+    for line in open(file_users, "r").readlines(): # löser igenom alla rader i accountfile.txt och letar efter match
+        login_info = line.split()
+        if username == login_info[0] and password == login_info[1]: # returnar true om båda är sanna
+            print("LOGGED IN AS '{}'".format(username)) # låter användaren veta att dom loggats in
+            return True
+    print("LOGIN FAIL") # ifall username och password inte finns/ matchar
+    return False
+
+def register(username, password):
+    print('Input credentials to register account: ')
+    username = input("Username: ")
+    password = input("Password: ")
+    with open(username + 'transactions.txt', 'a+') as f: # skriver ner en balance på 1000 till att börja i transacions filen
+        f.write('Balance $1000\n')
+    with open(username + 'profile.txt', 'w+') as f: # skriver användare info i profile filen
+        f.write(username)
+        f.write(" ")
+        f.write(password)
+        f.write(" ")
+        f.write('1000')
+    with open(file_users, "a") as f: # skriver till alla username och password som registreras till accountfile.txt som login funktionen använder
+        f.write(username)
+        f.write(" ")
+        f.write(password)
+        f.write("\n")
+        f.close()
+        print(f'Account set up, thank you for choosing CAYMAN ISLANDS NATIONAL BANK™')
