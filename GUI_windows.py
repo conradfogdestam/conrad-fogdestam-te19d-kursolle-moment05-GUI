@@ -5,7 +5,8 @@ def loginwindow():
     layout = [[sg.Text('Please enter credentials')],
             [sg.Text('Username', size=(15, 1)), sg.InputText()],
             [sg.Text('Password', size=(15, 1)), sg.InputText(password_char='*')],
-            [sg.Button('Back'), sg.Submit('Register Account')]]
+            [sg.Button('Back'), sg.Submit('No account? Register here')],
+            [sg.Text('© 2021 CAYMAN ISLANDS NATIONAL BANK™ CAY IS, Inc. All rights reserved.', justification='center', size=(62, 1), font='Helvetica 10')]]
 
     loginpage = sg.Window('CAYMAN ISLANDS NATIONAL BANK™', layout)
     # Event Loop to process "events" and get the "values" of the inputs
@@ -16,7 +17,7 @@ def loginwindow():
         if event == 'Back':
             loginpage.close()
             startwindow()
-        if event == 'Register Account':
+        if event == 'No account? Register here':
             loginpage.close()
             registerwindow()
         print('You entered ', values[0])
@@ -32,7 +33,8 @@ def registerwindow():
             [sg.Text('First name', size=(15, 1)), sg.InputText()],
             [sg.Text('Last name', size=(15, 1)), sg.InputText()],
             [sg.Text('Password', size=(15, 1)), sg.InputText(password_char='*')],
-            [sg.Button('Back'), sg.Button('Confirm Credentials and Register')]]
+            [sg.Button('Back'), sg.Button('Confirm Credentials and Register')], 
+            [sg.Text('© 2021 CAYMAN ISLANDS NATIONAL BANK™ CAY IS, Inc. All rights reserved.', justification='center', size=(62, 1), font='Helvetica 10')]]
 
     registerpage = sg.Window('CAYMAN ISLANDS NATIONAL BANK™', layout)
     # Event Loop to process "events" and get the "values" of the inputs
@@ -78,10 +80,11 @@ def startwindow():
 def logged_in():
     sg.theme('DarkPurple7')
     layout = [[sg.Text('CAYMAN ISLANDS NATIONAL BANK™', text_color='Magenta', size=(31, 1), font='Helvetica 20')],
-            [sg.Button('Balance', size=(62, 2))],
-            [sg.Button('Withdrawal', size=(62, 2))],
-            [sg.Button('Deposit', size=(62, 2))],
-            [sg.Button('Transactions', size=(62, 2))],
+            [sg.Text('We value your privacy, since 1998', text_color='Magenta', justification='center', size=(62, 1), font='Helvetica 10')],
+            [sg.Button('View Balance', size=(62, 2))],
+            [sg.Button('Make Withdrawal', size=(62, 2))],
+            [sg.Button('Make Deposit', size=(62, 2))],
+            [sg.Button('Check Transactions', size=(62, 2))],
             [sg.Button('Terminate Account', size=(62, 2))],
             [sg.Text('© 2021 CAYMAN ISLANDS NATIONAL BANK™ CAY IS, Inc. All rights reserved.', justification='center', size=(62, 1), font='Helvetica 10')]]
 
