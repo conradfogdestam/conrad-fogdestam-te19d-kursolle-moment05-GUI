@@ -1,4 +1,4 @@
 import GUI_windows
-import functions
+import bankapp_doinksters
 
 GUI_windows.startwindow()

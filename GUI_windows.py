@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
-import functions
+import bankapp_doinksters
+import tkinter as TK
 
 def loginwindow():
     sg.theme('DarkPurple7')
@@ -17,7 +18,7 @@ def loginwindow():
             break
 
         if event == 'Login':
-            if functions.login(values[0], values[1]) == True:
+            if bankapp_doinksters.login(values[0], values[1]) == True:
                 loginpage.close()
                 logged_in_window()
             else:
@@ -52,7 +53,7 @@ def registerwindow():
         if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
             break
         if event == 'Confirm Credentials and Register':
-            functions.register(values[0], values[3])
+            bankapp_doinksters.register(values[0], values[3])
             registerpage.close()
             startwindow()
 
@@ -106,7 +107,7 @@ def withdrawal_window():
             break
 
         if event == 'Withdraw':
-            functions.withdrawal(functions.logged_in_user(), functions.logged_in_password(), int(values[0]))
+            bankapp_doinksters.withdrawal(bankapp_doinksters.get_current_user(), bankapp_doinksters.get_current_password(), int(values[0]))
             withdrawal_page.close()
             logged_in_window()
 
@@ -131,7 +132,7 @@ def deposit_window():
             break
 
         if event == 'Deposit':
-            functions.deposit(functions.logged_in_user(), functions.logged_in_password(), int(values[0]))
+            bankapp_doinksters.deposit(bankapp_doinksters.get_current_user(), bankapp_doinksters.get_current_password(), int(values[0]))
             deposit_page.close()
             logged_in_window()
 
@@ -140,6 +141,59 @@ def deposit_window():
             logged_in_window()
 
     deposit_page.close()
+
+
+def transaction_window():
+    user = str(bankapp_doinksters.get_current_user())
+    my_file = open(user + 'transactions.txt')
+    transactions_list = my_file.readlines()
+    print(transactions_list)
+
+    sg.theme('DarkPurple7')
+    layout = [[sg.Text('Transactions')],
+            [sg.Multiline(default_text=transactions_list, size=(62, 10))],
+            [sg.Button('Done')],
+            [sg.Text('© 2021 CAYMAN ISLANDS NATIONAL BANK™ CAY IS, Inc. All rights reserved.', justification='center', size=(62, 1), font='Helvetica 10')]]
+
+    transactions_page = sg.Window('CAYMAN ISLANDS NATIONAL BANK™', layout)
+    # Event Loop to process "events" and get the "values" of the inputs
+    while True:
+        event, values = transactions_page.read()
+        if event == sg.WIN_CLOSED: # if user closes window or clicks cancel
+            break
+            
+        if event == 'Done':
+            transactions_page.close()
+            logged_in_window()
+
+    transactions_page.close()
+
+
+def terminate_window():
+    sg.theme('DarkPurple7')
+    layout = [[sg.Text('Terminate Account? ', size=(62, 1)),],
+            [sg.Button('Cancel'), sg.Button('Terminate')],
+            [sg.Text('© 2021 CAYMAN ISLANDS NATIONAL BANK™ CAY IS, Inc. All rights reserved.', justification='center', size=(62, 1), font='Helvetica 10')]]
+
+    terminate_page = sg.Window('CAYMAN ISLANDS NATIONAL BANK™', layout)
+    # Event Loop to process "events" and get the "values" of the inputs
+    while True:
+        event, values = terminate_page.read()
+        if event == sg.WIN_CLOSED: # if user closes window or clicks cancel
+            break
+
+        if event == 'Cancel':
+            terminate_page.close()
+            logged_in_window()
+
+        if event == 'Terminate':
+            bankapp_doinksters.terminate_user(bankapp_doinksters.get_current_user(), bankapp_doinksters.get_current_password())
+            terminate_page.close()
+            startwindow()
+            
+
+    terminate_page.close()
+
 
 def logged_in_window():
     sg.theme('DarkPurple7')
@@ -155,14 +209,14 @@ def logged_in_window():
 
 
     logged_in_page = sg.Window('CAYMAN ISLANDS NATIONAL BANK™', layout)
-    # Event Loop to process "events" and get the "values" of the inputs
+
     while True:
-        event = logged_in_page.read()
-        if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
+        event, values = logged_in_page.read()
+        if event == sg.WIN_CLOSED or event == 'Cancel': 
             break  
 
         if event == 'View Balance':
-            sg.popup(f"Balance: ${functions.check_balance(functions.get_current_user())}", font='Helvetica 20')
+            sg.popup("Balance: $", bankapp_doinksters.check_balance(bankapp_doinksters.get_current_user()), font='Helvetica 20')
 
         if event == 'Make Withdrawal':
             logged_in_page.close()
@@ -172,12 +226,15 @@ def logged_in_window():
             logged_in_page.close()
             deposit_window()
 
-        #if event == 'Check Transactions':
-
         if event == 'Terminate Account':
-            functions.terminate_user(functions.logged_in_user(), functions.logged_in_password())
-                
-        if event == 'EXIT':
             logged_in_page.close()
+            terminate_window()
+           
+        if event == 'Check Transactions':
+            logged_in_page.close()
+            transaction_window()
+
+        if event == 'EXIT':
+            break
 
     logged_in_page.close()
