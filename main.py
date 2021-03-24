@@ -1,4 +1,4 @@
 import GUI_windows
-from functions import *
+import functions
 
 GUI_windows.startwindow()

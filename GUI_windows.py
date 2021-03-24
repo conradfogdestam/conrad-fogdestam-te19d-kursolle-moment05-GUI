@@ -157,7 +157,7 @@ def logged_in_window():
     logged_in_page = sg.Window('CAYMAN ISLANDS NATIONAL BANK™', layout)
     # Event Loop to process "events" and get the "values" of the inputs
     while True:
-        event, values = logged_in_page.read()
+        event = logged_in_page.read()
         if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
             break  
 

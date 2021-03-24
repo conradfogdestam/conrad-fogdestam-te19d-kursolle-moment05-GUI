@@ -11,7 +11,7 @@ def get_current_user():
 def get_current_password():
     p = str(logged_in_password[-1])
     return p
-
+'''
 def terminate_user(user, password):
     os.remove(str(user) + 'profile.txt')
     os.remove(str(user) + 'transactions.txt')
@@ -21,7 +21,7 @@ def terminate_user(user, password):
         for line in lines:
             if line.strip("\n") != str(user) + ' ' + str(password):
                 f.write(line)
-
+'''
 def check_balance(username):
     with open(username + 'profile.txt', 'r') as f:
         danyboi = f.readline().split(' ')
