@@ -13,15 +13,15 @@ def loginwindow():
     # Event Loop to process "events" and get the "values" of the inputs
     while True:
         event, values = loginpage.read()
+        if event == sg.WIN_CLOSED: # if user closes window or clicks cancel
+            break
+
         if event == 'Login':
             if functions.login(values[0], values[1]) == True:
                 loginpage.close()
                 logged_in_window()
             else:
                 sg.Popup("Login failed, try again")
-
-        if event == sg.WIN_CLOSED: # if user closes window or clicks cancel
-            break
         if event == 'Back':
             loginpage.close()
             startwindow()
@@ -175,7 +175,7 @@ def logged_in_window():
         #if event == 'Check Transactions':
 
         if event == 'Terminate Account':
-            functions.terminate_user(str(functions.logged_in_user()), str(functions.logged_in_password()))
+            functions.terminate_user(functions.logged_in_user(), functions.logged_in_password())
                 
         if event == 'EXIT':
             logged_in_page.close()
