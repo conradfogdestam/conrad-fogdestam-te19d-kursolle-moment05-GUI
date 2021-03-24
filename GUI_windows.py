@@ -191,14 +191,13 @@ def terminate_window():
             terminate_page.close()
             startwindow()
             
-
     terminate_page.close()
 
 
 def logged_in_window():
     sg.theme('DarkPurple7')
     layout = [[sg.Text('CAYMAN ISLANDS NATIONAL BANK™', text_color='Magenta', size=(31, 1), font='Helvetica 20')],
-            [sg.Text('We value your privacy, since 1998', text_color='Magenta', justification='center', size=(62, 1), font='Helvetica 10')],
+            [sg.Text(f'{bankapp_doinksters.get_current_user().upper()}, Thank you for choosing us we value you and your privacy', text_color='Magenta', justification='center', size=(62, 1), font='Helvetica 10')],
             [sg.Button('View Balance', size=(62, 2))],
             [sg.Button('Make Withdrawal', size=(62, 2))],
             [sg.Button('Make Deposit', size=(62, 2))],
