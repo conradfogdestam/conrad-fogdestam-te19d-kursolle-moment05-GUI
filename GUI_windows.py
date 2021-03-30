@@ -7,7 +7,7 @@ def loginwindow():
     layout = [[sg.Text('Please enter credentials')],
             [sg.Text('Username', size=(15, 1)), sg.InputText()],
             [sg.Text('Password', size=(15, 1)), sg.InputText(password_char='*')],
-            [sg.Button('Back'), sg.Submit('No account? Register here'), sg.Button('Login')],
+            [sg.Button('Back'), sg.Button('No account? Register here'), sg.Submit('Login')],
             [sg.Text('© 2021 CAYMAN ISLANDS NATIONAL BANK™ CAY IS, Inc. All rights reserved.', justification='center', size=(62, 1), font='Helvetica 10')]]
 
     loginpage = sg.Window('CAYMAN ISLANDS NATIONAL BANK™', layout)
@@ -53,15 +53,17 @@ def registerwindow():
         if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
             break
         if event == 'Confirm Credentials and Register':
-            bankapp_doinksters.register(values[0], values[3])
-            registerpage.close()
-            startwindow()
+            if len(values[0]) < 2 or len(values[3]) <2:
+                sg.popup("Username and password should be greater than 2 characters")
+            else:
+                bankapp_doinksters.register(values[0], values[3])
+                registerpage.close()
+                startwindow()
 
 
         if event == 'Back':
             registerpage.close()
             startwindow()
-        print('You entered ', values[0])
 
     registerpage.close()
 
@@ -197,7 +199,7 @@ def terminate_window():
 def logged_in_window():
     sg.theme('DarkPurple7')
     layout = [[sg.Text('CAYMAN ISLANDS NATIONAL BANK™', text_color='Magenta', size=(31, 1), font='Helvetica 20')],
-            [sg.Text(f'{bankapp_doinksters.get_current_user().upper()}, Thank you for choosing us we value you and your privacy', text_color='Magenta', justification='center', size=(62, 1), font='Helvetica 10')],
+            [sg.Text(f'{bankapp_doinksters.get_current_user().upper()}, Thank you for choosing us, we value you and your privacy', text_color='Magenta', justification='center', size=(62, 1), font='Helvetica 10')],
             [sg.Button('View Balance', size=(62, 2))],
             [sg.Button('Make Withdrawal', size=(62, 2))],
             [sg.Button('Make Deposit', size=(62, 2))],
