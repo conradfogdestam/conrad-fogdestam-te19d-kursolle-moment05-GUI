@@ -16,9 +16,9 @@ def get_current_password():
 def terminate_user(user, password):
     os.remove(str(user) + 'profile.txt')
     os.remove(str(user) + 'transactions.txt')
-    with open(file_users, "r") as f: # löser inn alla rader ur accountfile.txt
+    with open(file_users, "r+") as f: # löser inn alla rader ur accountfile.txt
         lines = f.readlines()
-    with open(file_users, "w") as f:#skriver in alla rader förutom  'if line.strip("\n") != str(user) + ' ' + str(password):'
+    with open(file_users, "w+") as f:#skriver in alla rader förutom  'if line.strip("\n") != str(user) + ' ' + str(password):'
         for line in lines:
             if line.strip("\n") != str(user) + ' ' + str(password):
                 f.write(line)
@@ -98,7 +98,7 @@ def check_accounts(username, password):
 def register(username, password):
     if check_accounts(username, password) == True:
         with open(username + 'transactions.txt', 'a+') as f: # skriver ner en balance på 1000 till att börja i transacions filen
-            f.write('Balance $1000\n')
+            f.write('+ $1000\n')
         with open(username + 'profile.txt', 'w+') as f: # skriver användare info i profile filen
             f.write(username)
             f.write(" ")
