@@ -16,9 +16,9 @@ def get_current_password():
 def terminate_user(user, password):
     os.remove(str(user) + 'profile.txt')
     os.remove(str(user) + 'transactions.txt')
-    with open(file_users, "r") as f: # löser inn alla rader ur accountfile.txt
+    with open(file_users, "r+") as f: # löser inn alla rader ur accountfile.txt
         lines = f.readlines()
-    with open(file_users, "w") as f:#skriver in alla rader förutom  'if line.strip("\n") != str(user) + ' ' + str(password):'
+    with open(file_users, "w+") as f:#skriver in alla rader förutom  'if line.strip("\n") != str(user) + ' ' + str(password):'
         for line in lines:
             if line.strip("\n") != str(user) + ' ' + str(password):
                 f.write(line)
@@ -47,6 +47,7 @@ def withdrawal(username, password, minus):
 def witdrawal_append(user, minus):
     with open(str(user) + 'transactions.txt', 'a+') as f:
         f.write(f'- ${minus}, Available balance: $' + str(check_balance(user)) + '\n')
+        f.close()
 
 def deposit(username, password, plus):
     with open(username + 'profile.txt', 'r') as f:
@@ -64,12 +65,14 @@ def deposit(username, password, plus):
 def deposit_append(user, plus):
     with open(str(user) + 'transactions.txt', 'a+') as f: 
         f.write(f'+ ${plus}, Available balance: $' + str(check_balance(user)) + '\n')
+        f.close()
 
 def check_transactions(user):
     trans = []
     with open(user + 'transactions.txt', 'r+') as f:
         for line in (str(user) + 'transactions.txt'):
             trans.append(f.read())
+            f.close()
     return trans
 
 
@@ -98,7 +101,8 @@ def check_accounts(username, password):
 def register(username, password):
     if check_accounts(username, password) == True:
         with open(username + 'transactions.txt', 'a+') as f: # skriver ner en balance på 1000 till att börja i transacions filen
-            f.write('Balance $1000\n')
+            f.write('+ $1000\n')
+            f.close()
         with open(username + 'profile.txt', 'w+') as f: # skriver användare info i profile filen
             f.write(username)
             f.write(" ")
